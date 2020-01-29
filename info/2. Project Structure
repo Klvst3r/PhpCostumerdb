@@ -1,0 +1,18 @@
+Definición de la estructura del proyecto
+
+Antes de empezar a trabajar en el proyecto explicamos los ficheros y carpetas que tendremos creados al finalizar el proyecto, buscamos que sea lo más sencilla posible para centrarnos solo en la programación PHP:
+
+Vamos a diferenciar entre los ficheros que crearemos nosotros y los que añadiremos manualmente para integrar Bootstrap como veremos más adelante:
+
+    Nuestros ficheros:
+        index.php: fichero que utilizaremos para realizar toda la presentación de los idiomas (cb_language), programar los formularios PHP CRUD y hacer toda la gestión PHP.
+        database: creamos esta carpeta para crear las clases PHP que nos ayudarán a establecer conexión con la base de datos con DatabaseConnect.php y a controlar todas las operaciones PHP CRUD con CbLanguageController 
+    Carpetas para Bootstrap::para integrar Bootstrap como veremos más adelante creamos las carpetas:
+        css: ficheros necesarios de Bootstrap, aquí también añadiremos los ficheros css que necesitemos para nuestro proyecto, en este proyecto como verás más adelante no hacemos ningún diseño con css sino que utilizamos las utilidades de Bootstrap.
+        js: ficheros JavaScript que nos facilitan diferentes acciones en nuestro proyecto como, por ejemplo, ventanas modales.
+        fonts: ficheros de fuentes que se utilizan en Bootstrap.
+        assets: como veremos en el apartado de integración con Bootstrap aquí hay imágenes y archivos js que se utilizan en el ejemplo.
+
+
+        Bootstrap:
+        http://codigoxules.org/en/proyecto-php-crud-con-mysql-php-crud-1/#integramos-bootstrap
