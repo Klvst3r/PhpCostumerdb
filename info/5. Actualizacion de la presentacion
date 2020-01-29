@@ -1,0 +1,76 @@
+Actualizamos la presentación del listado
+
+Vamos a actualizar el diseño de nuestra tabla utilizando Bootstrap la documentación sobre el diseño de tablas está disponible en Bootstrap Table con explicaciones y ejemplos.
+
+Como puedes ver en el ejemplo añadimos las definiciones de css con las clases table-responsive que como su nombre indica nos permite tener una tabla responsive y table-striped para mostrar todas las filas con un bordeado de tipo cebra.
+
+Como vamos a implementar las acciones CRUD incluimos ya un formulario con los siguientes valores:
+
+	
+<form  role="form" name="formListCbLanguage"
+    method="post" action="index.php">
+
+Este formulario nos va a permitir transmitir los valore de los registros de la tabla a los formularios que manejaran las acciones CRUD como veremos a continuación, así queda finalmente nuestro código:
+
+<!-- Código PHP CRUD para presentar los idiomas. -->
+                    <h2 class="sub-header">Idiomas</h2>                
+  
+                    <?php
+                        include './database/DatabaseConnect.php';
+                         
+                        $dConnect = new DatabaseConnect;
+                        $cdb = $dConnect->dbConnectSimple();           
+                             
+                    ?>    
+             
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>LANGUAGE</th>
+                                    <th>NAME</th>
+                                    <th>IS ACTIVE?</th>
+                                    <th>LANGUAGE ISO</th>
+                                    <th>COUNTRY CODE</th>
+                                    <th>IS BASE?</th>
+                                    <th>IS SYSTEM LANGUAGE?</th>
+                                    <th>ACCIONES</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <form role="form" name="formListCbLanguage" method="post" action="index.php">
+                                <?php
+                                try {
+                                    $query = "SELECT * FROM cb_language;";
+                                    $statement = $cdb->prepare($query);
+                                    $result = $statement->execute();
+                                    $rows = $statement->fetchAll(\PDO::FETCH_OBJ);                                    
+                                     
+                                    foreach ($rows as $row) {
+                                        ?>
+                                        <tr>
+                                            <td><?php print($row->idlanguage); ?></td>
+                                            <td><?php print($row->namelanguage); ?></td>
+                                            <td><?php print($row->isactive); ?></td>
+                                            <td><?php print($row->languageiso); ?></td>
+                                            <td><?php print($row->countrycode); ?></td>
+                                            <td><?php print($row->isbaselanguage); ?></td>
+                                            <td><?php print($row->issystemlanguage); ?></td>
+                                            <td>BOTONES DE ACCIONES</td>
+                                            </tr>      
+                                         
+                                    <?php
+                                    }
+                                } catch (Exception $exception) {
+                                    echo 'Error hacer la consulta: ' . $exception;
+                                }
+                                ?>  
+                                   
+                                </form>        
+                            </tbody>      
+                        </table>                    
+                    </div>
+                    <!-- Fin código PHP CRUD -->
+
+
+Para el desarrollo de las acciones vamos a crear una clase donde incluiremos todas las operaciones CRUD, así como las consultas sobre cb_language, es decir, creamos un controlador para gestionar la tabla cb_language, a nuestra clase la llamamos CbLanguageController.                    

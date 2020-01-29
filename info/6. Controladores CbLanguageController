@@ -1,0 +1,29 @@
+Para el desarrollo de las acciones vamos a crear una clase donde incluiremos todas las operaciones CRUD, así como las consultas sobre cb_language, es decir, creamos un controlador para gestionar la tabla cb_language, a nuestra clase la llamamos CbLanguageController.                    
+
+
+Creamos la clase e implementamos nuestro primer método con las consulta sobre cb_language que teníamos directamente en el código, como puedes ver devolvemos el resultado de la consulta en un array para su presentación:
+
+<?php
+ 
+/**
+ * CbLanguageController clase donde agrupamos todas las acciones
+ * CRUD (Create Read Update Delete), y otras utilidades adicionales para la
+ * tabla de la base de datos <b>cb_language</b>.
+ * CbLanguageController class where we group all actions CRUD (Create Read Update Delete), 
+ * and additional utilities for database table data <b>cb_language</b>.
+ * @author Xules Puedes seguirme en mi web http://www.codigoxules.org).
+ * You can follow me on my website http://www.codigoxules.org/en
+ */
+class CbLanguageController {
+    var $cdb = null;
+    /**
+     * Devolvemos todos los resultados de la consulta sobre cb_language.
+     * We return all the results of the query on cb_language.
+     */
+    public function readAll(){
+        $query = "SELECT * FROM cb_language;";
+        $statement = $this->cdb->prepare($query);
+        $statement->execute();
+        $rows = $statement->fetchAll(\PDO::FETCH_OBJ);
+        return $rows;         
+    }   
