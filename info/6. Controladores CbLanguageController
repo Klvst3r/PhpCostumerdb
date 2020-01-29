@@ -27,3 +27,39 @@ class CbLanguageController {
         $rows = $statement->fetchAll(\PDO::FETCH_OBJ);
         return $rows;         
     }   
+
+
+
+Codigo Final de este paso de Index en la seccion del try
+
+    try {
+                                   /* $query = "SELECT * FROM cb_language;";
+                                    $statement = $cdb->prepare($query);
+                                    $result = $statement->execute();
+                                    $rows = $statement->fetchAll(\PDO::FETCH_OBJ); */
+
+                                    /*-----------  Sustitución de la consulta por el controlador -------------*/
+                                    include 'controller/CbLanguageController.php';  
+
+                                    $cbLanguageController = new CbLanguageController();
+                                    $cbLanguageController->cdb = $cdb;  
+
+                                    $rows = $cbLanguageController->readAll();
+
+                                    /*-----------  Sustitución de la consulta por el controlador -------------*/
+                                    foreach ($rows as $row) {
+                                        ?>
+                                        <tr>
+                                            <td><?php print($row->idlanguage); ?></td>
+                                            <td><?php print($row->namelanguage); ?></td>
+                                            <td><?php print($row->isactive); ?></td>
+                                            <td><?php print($row->languageiso); ?></td>
+                                            <td><?php print($row->countrycode); ?></td>
+                                            <td><?php print($row->isbaselanguage); ?></td>
+                                            <td><?php print($row->issystemlanguage); ?></td>
+                                            <td>BOTONES DE ACCIONES</td>
+                                            </tr>      
+                                         
+                                    <?php
+                                    }
+                                } 
