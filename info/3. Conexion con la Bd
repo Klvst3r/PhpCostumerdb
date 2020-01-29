@@ -1,0 +1,403 @@
+3. DEFINIMOS LAS CONEXIÓN A MySQL CON PHP
+
+Para conectarnos a una base de datos MySQL en PHP podemos hacerlo mediante PDO o con MySQLi, en este ejemplo vamos a usar PDO que es el que uso generalmente en mis proyectos ya que te permite conectar con múltiples bases de datos y no solo con MySQL, en esta publicación PDO vs MySQLi – Conexión a MySQL con PHP te explico con detalle como conectar a una base de datos con las dos formas antes mencionadas.
+
+Creamos la clase DatabaseConnect
+
+En la clase DatabaseConnect vamos a incluir los métodos que utilizamos para crear y administrar la conexión a la base de datos.
+
+En la clase creamos dos métodos sencillos el primero es public function dbConnect($dbsystem, $host, $dbname, $username, $passwd) que es un método genérico para la conexión con cualquier base de datos usando PDO mediante los parámetros indicados en el método. Para nuestro ejemplo creamos un método auxiliar para nuestra conexion a MySQL que llamaremos dbConnectSimple() esto sirve de ejemplo para ver el funcionamiento del método anterior. A continuación, el código que hemos diseñado y que utilizaremos desde index.php es el siguiente:
+
+http://codigoxules.org/en/pdo-vs-mysqli-conexion-mysql-php/
+
+-------------------------------------------------------------
+
+Conexión a MySQL con PHP
+
+    INTRODUCCIÓN Y NECESIDADES
+    CONEXIÓN CON PDO::__construct()
+    CONEXIÓN CON mysqli_connect()
+    CONSULTA BÁSICA MySQL
+    DOCUMENTACIÓN
+
+Software utilizado
+
+    Apache: el proyecto Apache HTTP Server es un esfuerzo por desarrollar y mantener un servidor HTTP de código abierto para sistemas operativos modernos, incluyendo UNIX y Windows.
+    MySQL: base de datos que utilizamos para ver las conexiones.
+    PHP: lenguaje de programación del lado del servidor que vamos a ver.
+    Netbeans: IDE multilenguage que integra entre otros PHP
+    Atom: editor de texto con múltiples plugins y soporte para muchos lenguages como PHP.
+    Ubuntu: en mi caso uso Linux en particular Ubuntu para los desarrollos.
+
+
+ 
+1. INTRODUCCIÓN Y NECESIDADES
+
+Antes de empezar necesitaremos tener instalado un servidor web con la conexión a MySQL y las extensiones de PHP, puedes utilizar una instalación automática de este software, por ejemplo con: XAMPP o EasyPHP, o si quieres hacer una instalación paso a paso de cada una de las partes consulta mi tutorial: Instalación LAMP (Linux + Apache + MySQL + PHP) en Ubuntu 15.10.
+
+Instalación LAMP en Ubuntu 15.10
+
+Instalación LAMP en Ubuntu 15.10
+
+Así el software básico que utilizamos en nuestro ejemplos es:
+
+    Instalamos Apache: servidor web HTTP que interpretará nuestro código HTML y donde integramos PHP
+    Instalamos MySQL: necesitamos una base de datos para las pruebas
+    Instalamos PHP: necesitamos instalar PHP para que nuestro servidor web sea capaz de interpretar el código.
+
+
+ 
+2. CONEXIÓN CON PDO
+
+Crea una instancia de PDO que representa una conexión a una base de datos y que devolverá en caso de éxito un objeto PDO que nos permitirá el acceso a los métodos para crear y ejecutarla las consultas a la base de datos, este es el constructor que utilizamos para la conexión:
+
+	
+public PDO::__construct ( string $dsn
+                [, string $username [, string $password [, array $options ]]] )
+
+En la documentación de la clase PDO que representa una conexión entre PHP y un servidor de bases de datos nos explican los métodos principales que nos proporciona esta clase para la conexión y consulta a una base de datos.
+
+
+
+Documentación PDO:
+https://www.php.net/manual/es/class.pdo.php
+
+
+Vamos a ver los parámetros básicos del constructor que vamos a utilizar:
+
+    DSN (Data Source Name): nombre del origen de los datos contiene la información requerida para conectarse a la base de datos. Un DSN consiste en el nombre del controlador de PDO, seguido por dos puntos, seguido por la sintaxis específica del controlador de PDO para la conexión. Así para MySQL lo formaremos por:
+        El nombre del PDO: mysql seguido por :
+        El host: el host ya sea el nombre correspondiente o la IP directamente, para este sencillo ejemplo, utilizo una base de datos en local con lo que el host se definiría así: host=127.0.0.1
+        La base de datos: el nombre de la base de datos a la que nos queremos conectar en mi caso: dbname=customerdb, introducimos como separado un ; antes de dbname
+        El DSN del ejemplo que vamos a ver será el siguiente: mysql:host=127.0.0.1;dbname=customerdb ($dsn=$dbsystem.’:host=’.$host.’;dbname=’.$dbname;) 
+    username: nombre del usuario para la conexión a la base de datos especificada en el DSN.
+    password contraseña asociada la usuario que definimos para la conexión
+    options: array de la forma clave=>valor con opciones de conexión específicas del controlador.
+
+El parámetro DSN admite tres métodos diferentes de especificar los parámetros requeridos para crear la conexión a la base de datos: invocación del controlador con el DSN completo, invocación del URI DSN y mediante un alias.
+
+Lo bueno que tiene el uso de la clase PDO es que variando el DSN en función de la base de datos nos permitiría hacer un cambio de unas base de datos a otra de forma muy sencilla.
+
+Así, con esta información creamos la página PHP: ejemploConexionMySQL.php donde introducimos el código PHP para la conexión que quedaría de la siguiente manera:
+
+	
+<?php
+    $dbsystem='mysql';
+    $host='127.0.0.1';
+    $dbname='customerdb';
+    $dsn=$dbsystem.':host='.$host.';dbname='.$dbname;
+    $username='xulescode';
+    $passwd='xulescode';
+    $connection = null;
+    try {          
+        echo 'Conexión a la base de datos: '.$dsn.'<br /><br />';
+        $connection = new PDO($dsn, $username, $passwd);
+        echo '<h4>Conexión con éxito</h4> <br />';                
+    } catch (PDOException $pdoExcetion) {
+        $connection = null;
+        echo 'Error al establecer la conexión: '.$pdoExcetion;
+    }
+?>
+
+Para presentar el código directamente en una página web mostrando el resultado le añadimos un código HTML sencillo para mostrar los datos, y hacemos pruebas, comprobando el funcionamiento tanto si tiene éxito como si no:
+
+	
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Ejemplo de conexión a la base de datos MySQL</title>
+    </head>
+    <body>
+        <h2>Ejemplo de conexión a la base de datos MySQL</h2>
+        <?php
+            $dbsystem='mysql';
+            $host='127.0.0.1';
+            $dbname='customerdb';
+            $dsn=$dbsystem.':host='.$host.';dbname='.$dbname;
+            $username='xulescode';
+            $passwd='xulescode';
+            $connection = null;
+            try {          
+                echo 'Conexión a la base de datos: '.$dsn.'<br /><br />';
+                $connection = new PDO($dsn, $username, $passwd);
+                echo '<h4>Conexión con éxito</h4> <br />';                
+            } catch (PDOException $pdoExcetion) {
+                $connection = null;
+                echo 'Error al establecer la conexión: '.$pdoExcetion;
+            }
+        ?>
+    </body>
+</html>  
+
+Si la conexión tiene éxito la web se mostrará así:
+PHP Database - Conexión PDO con éxito
+
+Para comprobar el lanzamiento de la excepción simplemente introduce cualquier error en el DSN para que se muestre en la web el mensaje, en mi caso voy a cambiar el nombre de la base de datos por: customerdb5, que no existe en mi servidor MySQL, el error con la traza de la excepción:
+
+3. CONEXIÓN CON mysqli_connect()
+
+Esta conexión abre una conexión al Servidor de MySQL que está en ejecución, como puedes ver esta clase es específica para MySQL a diferencia de la conexión PDO que nos servía para múltiples bases de datos.
+
+Para establecer una conexión con mysqli_connect() solo necesitamos hacer una llamada al constructor o al procedimiento con los parámetros de host, usuario, password y nombre de la base de datos, como es específico de MySQL la especificación del DSN se hace internamente:
+
+Estilo orientado a objetos
+
+	
+mysqli::__construct ([ string $host = ini_get("mysqli.default_host") 
+            [, string $username = ini_get("mysqli.default_user") [, string $passwd = ini_get("mysqli.default_pw") 
+            [, string $dbname = "" [, int $port = ini_get("mysqli.default_port") [, string $socket = ini_get("mysqli.default_socket") ]]]]]] )
+
+Estilo por procedimientos
+
+	
+mysqli mysqli_connect ([ string $host = ini_get("mysqli.default_host") 
+            [, string $username = ini_get("mysqli.default_user") [, string $passwd = ini_get("mysqli.default_pw") 
+            [, string $dbname = "" [, int $port = ini_get("mysqli.default_port") [, string $socket = ini_get("mysqli.default_socket") ]]]]]] )
+
+En este caso, a diferencia del ejemplo anterior que utilizamos un constructor vamos a establecer una conexión utilizando el procedimiento, este sería el código PHP:
+
+	
+<?php
+    $dbsystem='mysql';
+    $host='127.0.0.1';
+    $dbname='customerdb7';
+    $username='xulescode';
+    $passwd='xulescode';            
+    echo 'Conexión a la base de datos: '.$dsn.'<br /><br />';
+    $connection = mysqli_connect($host, $username, $passwd, $dbname);             
+    if ($connection){
+        echo '<h4>Conexión con éxito: '.mysqli_get_host_info($connection).'</h4> <br />';
+    }else{                
+        echo 'Error al establecer la conexión  ('.mysqli_connect_errno().'): '.mysqli_connect_error().' <br />';                
+        exit();
+    }
+?>
+
+Como puedes ver los parámetros que hemos utilizado son:
+
+    El host: el host ya sea el nombre correspondiente o la IP directamente, para este sencillo ejemplo, utilizo una base de datos en local con lo que el host se definiría así: host=127.0.0.1 .
+    La base de datos: el nombre de la base de datos a la que nos queremos conectar en mi caso: dbname=customerdb.
+    username: nombre del usuario para la conexión.
+    password contraseña asociada la usuario que definimos para la conexión.
+
+Ahora incluimos nuestro código PHP dentro de una estructura sencilla HTML para mostrar los resultados en nuestro servidor:
+
+	
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Ejemplo de conexión a la base de datos MySQL</title>
+    </head>
+    <body>
+ 
+        <h2>Ejemplo de conexión a la base de datos MySQL</h2>
+ 
+        <?php
+            $dbsystem='mysql';
+            $host='127.0.0.1';
+            $dbname='customerdb';
+            $username='xulescode';
+            $passwd='xulescode';            
+            echo 'Conexión a la base de datos: '.$dsn.'<br /><br />';
+            $connection = mysqli_connect($host, $username, $passwd, $dbname);             
+            if ($connection){
+                echo '<h4>Conexión con éxito: '.mysqli_get_host_info($connection).'</h4> <br />';
+            }else{                
+                echo 'Error al establecer la conexión  ('.mysqli_connect_errno().'): '.mysqli_connect_error().' <br />';                
+                exit();
+            }
+        ?>    
+    </body>
+</html> 
+
+Ahora ejecutamos nuestro código para comprobar la conexión:
+PHP Database - Conexión mysqli_connect con éxito
+
+PHP Database – Conexión mysqli_connect con éxito
+
+Modificamos el nombre de la base de datos, por ejemplo ponemos customerdbotra, para forzar la muestra del mensaje de error:
+PHP Database - Error en la conexión mysqli_connect
+
+PHP Database – Error en la conexión mysqli_connect
+mysql_connect — Antes se utilizaba para abrir una conexión al servidor MySQL
+
+    Advertencia – Antes se utilizaba la clase mysql_connect esta extensión fue declarada obsoleta en PHP 5.5.0 y eliminada en PHP 7.0.0. en su lugar debemos utilizar las extensiones MySQLi PDO_MySQL.
+
+
+ 
+4. CONSULTA BÁSICA CON PHP A MySQL
+
+Una vez que ya hemos creado nuestra conexión vamos a hacer una pequeña consulta para ello utilizamos una tabla básica del proyecto Learning Project que próximamente publicaremos un tutorial de su desarrollo con PHP CRUD, el desarrollo sobre MySQL (MariaDB) lo puedes consultar aquí: Creando la primera tabla cb_language , de todas formas lo que necesitas es este código para crear la tabla en la base de datos.
+Creación de la tabla:
+
+	
+CREATE TABLE cb_language
+(
+  idlanguage VARCHAR(6) NOT NULL COMMENT 'Como clave primaria usamos la codificación del idioma i18n e i10n, las principales: es_ES y en_EN, que serán las que se usarán por defecto.',
+  namelanguage VARCHAR(60) NOT NULL COMMENT 'Nombre del idioma en el idioma por defecto del sistema (castellano).',
+  isactive VARCHAR(1) NOT NULL DEFAULT 'N',
+  languageiso VARCHAR(2),
+  countrycode VARCHAR(2),
+  isbaselanguage VARCHAR(1) NOT NULL DEFAULT 'N',
+  issystemlanguage VARCHAR(1) NOT NULL DEFAULT 'N',
+CONSTRAINT pk_cb_language PRIMARY KEY (idlanguage),
+CONSTRAINT u_cb_language_namelanguage UNIQUE (namelanguage) 
+)
+ENGINE = InnoDB
+COMMENT='Como clave primaria usamos la codificación del idioma i18n e i10n, las principales: es_ES y en_EN, que serán las que se usarán por defecto.';
+GRANT ALL ON TABLE cb_language TO xulescode;
+
+Población de datos sencilla:
+
+	
+INSERT INTO cb_language( idlanguage, isactive, namelanguage, languageiso, countrycode, isbaselanguage, issystemlanguage ) 
+    VALUES ('es_ES', 'Y', 'Spanish (Spain)', 'es', 'ES', 'N', 'N' );
+INSERT  INTO cb_language( idlanguage, isactive, namelanguage, languageiso, countrycode, isbaselanguage, issystemlanguage )  
+    VALUES ('da_DK', 'Y', 'Danish (Denmark)', 'da', 'DK', 'N', 'N' );
+INSERT INTO cb_language( idlanguage, isactive, namelanguage, languageiso, countrycode, isbaselanguage, issystemlanguage ) 
+    VALUES ('de_AT', 'Y', 'German (Austria)', 'de', 'AT', 'N', 'N' );
+INSERT INTO cb_language( idlanguage, isactive, namelanguage, languageiso, countrycode, isbaselanguage, issystemlanguage ) 
+    VALUES ('de_DE', 'Y', 'German (Germany)', 'de', 'DE', 'N', 'N' );
+INSERT INTO cb_language( idlanguage, isactive, namelanguage, languageiso, countrycode, isbaselanguage, issystemlanguage )   
+    VALUES ('en_GB', 'Y', 'English (United Kingdom)', 'en', 'GB', 'N', 'N' );
+INSERT INTO cb_language( idlanguage, isactive, namelanguage, languageiso, countrycode, isbaselanguage, issystemlanguage ) 
+    VALUES ('en_IE', 'Y', 'English (Ireland)', 'en', 'IE', 'N', 'N' );
+INSERT INTO cb_language( idlanguage, isactive, namelanguage, languageiso, countrycode, isbaselanguage, issystemlanguage )
+    VALUES ('es_AR', 'Y', 'Spanish (Argentina)', 'es', 'AR', 'N', 'N' );
+INSERT INTO cb_language( idlanguage, isactive, namelanguage, languageiso, countrycode, isbaselanguage, issystemlanguage ) 
+    VALUES ('es_UY', 'Y', 'Spanish (Uruguay)', 'es', 'UY', 'N', 'N' );
+
+Ahora mostremos los resultados con PHP.
+Consulta usando PDO
+
+Con PDO vamos a crear la consulta utilizando en primer lugar el método prepare para preparar un sentencia para su ejecución:
+
+	
+public PDOStatement PDO::prepare ( string $statement [, array $driver_options = array() ] )
+
+Como puedes ver este nos devuelve un objeto del tipo PDOStatement que ya podemos ejecutar para después acceder a sus resultados usando el método execute que devuelve true si todo fue bien:
+
+	
+public bool PDOStatement::execute ([ array $input_parameters ] )
+
+Finalmente, creamos el código donde usamos el método para fetchAll(\PDO::FETCH_OBJ) para recorrer las filas con los registros con un bucle:
+
+	
+try{
+    $query="SELECT * FROM cb_language;";
+    $statement = $connection->prepare($query);
+    $result = $statement->execute();
+    $rows = $statement->fetchAll(\PDO::FETCH_OBJ);
+    echo '<br />LANGUAGE | NAME | IS ACTIVE? | LANGUAGE ISO | COUNTRY CODE |  IS BASE? | IS SYSTEM LANGUAGE?';
+    foreach ($rows as $row) {
+        echo '<br />'.$row->idlanguage.' | '.$row->namelanguage.' | '.$row->isactive
+                .' | '.$row->languageiso.' | '.$row->countrycode.' | '.$row->isbaselanguage.' | '.$row->issystemlanguage;
+    }      
+} catch (PDOException $pdoExcetion) {
+    echo 'Error hacer la consulta: '.$pdoExcetion->getMessage();
+}
+
+Incluimos el código a continuación de la conexión a la base de datos del apartado anterior el resultado sería:
+PHP Database - PDO Resultado de la consulta
+
+PHP Database – PDO Resultado de la consulta
+
+¿Qué pasa si tenemos mal la consulta? Tal y como tenemos el código no detectaríamos el error en la excepción ya que no le hemos indicado al PDO que los tiene que mostrar para conseguirlo simplemente incluimos esta línea después de hacer la conexión:
+
+	
+$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+Si por ejemplo ponemos el nombre de una tabla de la base de datos que no existe, en mi caso he puesto: cb_language_error, este sería el resultado:
+PHP Database - PDO error en la consulta
+
+PHP Database – PDO error en la consulta
+Consulta usando mysqli_connect()
+
+Con mysqli_connect() utilizaremos simplemente dos métodos, uno para hacer la consulta mysqli_query($connection, $query) y otro para obtener las filas y mostrar los resultados mysqli_fetch_assoc($result):
+
+    mysqli_query($connection, $query): mysqli::query — mysqli_query — Realiza una consulta a la base de datos para consultas que distintas de INSERT, UPDATE o DELETE.
+    mysqli_fetch_assoc($result): mysqli_result::fetch_assoc — mysqli_fetch_assoc — obtenemos una fila de resultado como un array asociativo o null si no hubiese resultado.
+
+Así, el código que tenemos que añadir es el siguiente:
+
+	
+$query="SELECT * FROM cb_language;";
+$result = mysqli_query($connection, $query);
+echo '<br />LANGUAGE | NAME | IS ACTIVE? | LANGUAGE ISO | COUNTRY CODE |  IS BASE? | IS SYSTEM LANGUAGE?';
+while($row = mysqli_fetch_assoc($result)):
+    echo '<br />'.$row['idlanguage'].' | '.$row['namelanguage'].' | '.$row['isactive']
+            .' | '.$row['languageiso'].' | '.$row['countrycode'].' | '.$row['isbaselanguage'].' | '.$row['issystemlanguage'];
+endwhile;   
+
+Como puedes ver el resultado es el mismo que en el caso anterior en caso de éxito, aquí solo buscamos enseñar como se hace la consulta con PHP la base de datos, por eso hacemos esta presentación tan sencilla.
+
+Para detectar los errores SQL y mostrar la traza del error, modificamos un poco el código, ya que ahora simplemente no se mostrarían los datos:
+
+	
+$query="SELECT * FROM cb_language;";
+            $result = mysqli_query($connection, $query);
+            if ($result){
+                echo '<br />LANGUAGE | NAME | IS ACTIVE? | LANGUAGE ISO | COUNTRY CODE |  IS BASE? | IS SYSTEM LANGUAGE?';
+                while($row = mysqli_fetch_assoc($result)){
+                    echo '<br />'.$row['idlanguage'].' | '.$row['namelanguage'].' | '.$row['isactive']
+                            .' | '.$row['languageiso'].' | '.$row['countrycode'].' | '.$row['isbaselanguage'].' | '.$row['issystemlanguage'];
+                }
+            }else{
+                echo 'Error al hacer la consulta ('.mysqli_sqlstate($connection).'):'.mysqli_error($connection);         
+            }
+
+Este sería el resultado si introducimos por ejemplo el nombre de una base de datos que no existe:
+PHP Database - mysqli_connect Error al hacer la consulta
+
+PHP Database – mysqli_connect Error al hacer la consulta
+
+DOCUMENTACIÓN
+
+    http://php.net/manual/es/function.mysql-connect.php: documentación de la extensión obsoleta que se utilizaba en versiones antiguas de PHP para conectarse a la base de datos MySQL.
+    
+
+    Clase PDO
+    https://www.php.net/manual/es/class.pdo.php
+    
+
+    XAMPP
+    https://www.apachefriends.org/es/index.html
+
+    EasyPHP
+    https://www.easyphp.org/
+    
+
+    Instalación LAMP (Linux + Apache + MySQL + PHP) en Ubuntu 15.10: instalación paso a paso de cada una de las partes del software para el servidor Apache con MySQL y PHP.
+    http://codigoxules.org/en/instalacion-lamp-linux-apache-mysql-php-en-ubuntu-15-10/
+
+    http://codigoxules.org/en/instalacion-lamp-linux-apache-mysql-php-en-ubuntu-15-10/
+
+    https://www.php.net/manual/es/class.pdo.php
+
+-------------------------------------------------------------
+
+<-Index.php
+
+
+Como puedes ver es sencillo, añadimos con include la clase que vamos a utilizar instanciamos la clase, y finalmente, llamamos al método para establecer la conexión: $cdb = $dConnect->dbConnectSimple();, hemos dejado un mensaje de texto para mostrar en la página si la conexión ha tenido éxito o se ha producido un error, ahora comprueba el funcionamiento por ti mismo.
+Creamos una consulta a la base de datos
+
+Vamos a presentar en HTML el resultado de la consulta más sencilla sobre la tabla idiomas: SELECT * FROM cb_language;. El desarrollo es sencillo primero creamos el método para obtener los resultados en array y así poder presentarlo utilizando un bucle foreach:
+
+Creamos una consulta a la base de datos
+
+Vamos a presentar en HTML el resultado de la consulta más sencilla sobre la tabla idiomas: SELECT * FROM cb_language;. El desarrollo es sencillo primero creamos el método para obtener los resultados en array y así poder presentarlo utilizando un bucle foreach:
+
+	
+$query = "SELECT * FROM cb_language;";
+    $statement = $cdb->prepare($query);
+    $result = $statement->execute();
+    $rows = $statement->fetchAll(\PDO::FETCH_OBJ);
+
+Como los datos los vamos a presentar en una tabla para cada registro que queramos mostrar añadimos el código:
+
+	
+<span class="code-php-b"><td><?php print($row->idlanguage); ?></td></span> 
+
+donde combinamos PHP con HTML, por cada fila como es lógico añadiremos una nueva fila en la tabla, este es el código completo:
