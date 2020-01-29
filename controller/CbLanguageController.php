@@ -21,4 +21,30 @@ class CbLanguageController {
         return $rows;         
     }   
 
+
+
+    /**
+     * Creamos un nuevo idioma con los parámetros pasados.
+     * We create a new language with parameters .
+     * @param type $idlanguage
+     * @param type $namelanguage
+     * @param type $isactive
+     * @param type $languageiso
+     * @param type $countrycode
+     * @param type $isbaselanguage
+     * @param type $issystemlanguage
+     */
+    public function create(){ 
+        $sqlInsert = "INSERT INTO cb_language(idlanguage, namelanguage, isactive, languageiso, countrycode, isbaselanguage, issystemlanguage)"
+                 . "    VALUES ('".$idlanguage."', '".$namelanguage."', '".$isactive."', '".$languageiso."', '".$countrycode."', '".$isbaselanguage."', '".$issystemlanguage."')";
+        try {             
+            $this->cdb->exec($sqlInsert);      
+        } catch (PDOException $pdoException) {            
+            echo 'Error crear un nuevo elemento cb_language en create(...): '.$pdoException->getMessage();
+            exit();
+        }
+    }//Create Method
+
+
+
 }

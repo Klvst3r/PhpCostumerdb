@@ -96,3 +96,29 @@ Este formulario es el mismo que reutilizaremos para actualizar y leer un idioma 
 los elementos de texto necesarios para crear un nuevo elemento, como estructura adicional hemos añadido algunos comentarios y también mostramos un ejemplo con ayuda de Bootstrap. 
 
 
+<?php
+                        include './database/DatabaseConnect.php';
+
+                        //Controller
+                        include './controller/CbLanguageController.php';
+                         
+                        $dConnect = new DatabaseConnect;
+                        $cdb = $dConnect->dbConnectSimple();           
+
+                        if (isset($_POST["save-language"]) ) {  
+                            $idlanguage = $_POST['idlanguage'];
+                            $namelanguage = $_POST['namelanguage'];
+                            $isactive  = $_POST['isactive'];
+                            $languageiso = $_POST['languageiso'];
+                            $countrycode = $_POST['countrycode'];
+                            $isbaselanguage = $_POST['isbaselanguage'];
+                            $issystemlanguage = $_POST['issystemlanguage']; 
+                            $cbLanguageController->create($idlanguage, $namelanguage, $isactive, $languageiso, $countrycode, $isbaselanguage, $issystemlanguage);
+                        }
+
+
+                             
+                    ?>  
+
+
+Ahora solo queda implementar el método create($idlanguage, $namelanguage, $isactive, $languageiso, $countrycode, $isbaselanguage, $issystemlanguage) para crear el idioma dentro de la clase CbLanguageController, simplemente hacemos una ejecución de un INSERT desde PHP con la conexión establecida, este es el código:                     

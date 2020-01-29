@@ -124,7 +124,11 @@
                             $countrycode = $_POST['countrycode'];
                             $isbaselanguage = $_POST['isbaselanguage'];
                             $issystemlanguage = $_POST['issystemlanguage']; 
-                            $cbLanguageController->create($idlanguage, $namelanguage, $isactive, $languageiso, $countrycode, $isbaselanguage, $issystemlanguage);
+
+                            //$CbLanguageController  = new CbLanguageController(); 
+                            
+                            //$CbLanguageController -> create($idlanguage, $namelanguage, $isactive, $languageiso, $countrycode, $isbaselanguage, $issystemlanguage);
+                            
                         }
 
 
@@ -226,7 +230,7 @@
                                     $rows = $statement->fetchAll(\PDO::FETCH_OBJ); */
 
                                     /*-----------  Sustitución de la consulta por el controlador -------------*/
-                                    include 'controller/CbLanguageController.php';  
+                                    //include 'controller/CbLanguageController.php';  
 
                                     $cbLanguageController = new CbLanguageController();
                                     $cbLanguageController->cdb = $cdb;  
