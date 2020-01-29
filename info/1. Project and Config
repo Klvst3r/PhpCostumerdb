@@ -1,0 +1,63 @@
+Creación del proyecto y configuración
+
+Para esto proyecto voy a utilizar Netbeans IDE, ya que aunque es un IDE un poco pesado para este tipo de proyectos creo que facilita mucho el aprendizaje para quién está empezando desde cero, ya que nos permite integrar muy fácilmente el despliegue de nuestro proyecto en el servidor, y dentro del mismo, también configuramos un acceso a la instalación MySQL, con lo que tenemos todo integrado y solo nos tenemos que preocupar de programar, estas son algunas características de la integración de Netbeans con PHP:
+
+    Entorno PHP con la integración completa con los estándares web de codificación, con soporte completo para HTML5, JavaScript y CSS3.
+    Potente editor de código fuente para PHP
+    Soporte para PHP 5.6
+    Web Frameworks: integración con Symfony 2 y Zend, por ejemplo, yo lo he utilizado con Symfony y me ha resultado cómoda la programación.
+    Creación de proyectos PHP
+    Debugger: nos permite inspeccionar variables, introducir breakpoints,…
+
+Una alternativa muy sencilla es instalar PhpMyAdmin para la base de datos y utilizar cualquier editor que tenga incorporado edición de código fuente con ayudas como, por ejemplo Atomic, o el que más te guste.
+
+Veamos ahora paso a paso la creación del proyecto e integración con el servidor:
+
+    Creación del proyecto PHP: para ello seleccionamos File > New Project en la pantalla buscamos PHP y seleccionamos PHP Application
+
+Nombramos el proyecto: damos nombre al proyecto y seleccionamos la ubicación, podemos seleccionar también la versión de PHP.    
+
+Project: PhpCostumerdb
+
+
+Servidor: seleccionamos la ubicación de nuestro servidor, en mi instalación dejo la opción por defecto Localhost, una opción muy interesante nos permite copiar automáticamente los cambios a nuestro servidor local
+
+
+Selección de Framework: en este caso no seleccionamos ninguno, no obstante lo mostramos aquí por si no conocías esta utilidad.
+
+Finalizado este último paso aceptamos y ya tenemos nuestro proyecto creado y configurado.
+Configuración de MySQL
+Creamos la base de datos customerdb
+
+Creamos la base de datos donde vamos a crear las tablas para desarrollar nuestro tutorial, el nombre que utilizamos es customerdb:
+	
+CREATE DATABASE customerdb;
+
+Creamos el usuario que vamos a utilizar xulescode y la contraseña, en este caso la misma:
+	
+CREATE USER xulescode@localhost IDENTIFIED BY 'xulescode'
+
+Damos todos los privilegios al usuario xulescode sobre las base de datos customerdb:
+	
+GRANT ALL PRIVILEGES ON customerdb.* TO xulescode@localhost;
+
+Ya tenemos lista nuestra base de datos para empezar a trabajar, ahora podemos descargar los scripts para la creación de las tablas y para poblarlas de datos.
+Cargamos customerdb en Netbeans
+
+Para configurar en Netbeans la base de datos nos tenemos que ir a la pestaña Services, ahí nos aparece un árbol con diferentes opciones donde desplegamos la opción Databases, situado encima activamos el menú popup para seleccionar la opción New Connection, ahora rellenamos la configuración de nuestro servidor MySQL como se muestra en la imagen:
+
+La configuración es sencilla selección del driver, dirección del servidor de base de datos en mi caso Localhost y el puerto 3306 por defecto en MySQL, como base de datos seleccionamos mysql, ya que de momento no hemos creado la base de datos de nuestra aplicación.
+
+Finalizamos la configuración seleccionando un esquema (schema) por defecto de la base de datos seleccionada:
+
+
+Creamos las tablas y añadimos los datos
+
+Descarga el script con las tablas:
+
+/assets/bd/tablas.sql
+
+
+Reference:
+
+http://codigoxules.org/en/proyecto-php-crud-con-mysql-php-crud-1/
