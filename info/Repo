@@ -1,0 +1,62 @@
+Subir un repositorio local a Github
+
+https://gist.github.com/cgonzalezdai/cc33db72a6fe5178637aabb562eae35c
+
+git init
+
+git add .
+
+git commit -m "first commit"
+
+git remote add origin https://github.com/NOMBRE_USUARIO/NOMBRE_PROYECTO.git
+
+git push -u origin master
+
+
+
+
+Otros Enlaces:
+
+https://www.adictosaltrabajo.com/2011/04/26/github-first-steps-upload-project/
+
+https://desarrolloweb.com/articulos/crear-repositorio-git-codigo.html
+
+https://www.ecodeup.com/como-subir-el-codigo-de-tu-proyecto-a-github/
+
+
+
+
+https://ed.team/blog/como-enviar-tus-proyectos-locales-github
+
+Ve a tu cuenta de Github, a la pestaña Repositorios y click en Nuevo. O simplemente ve a https://github.com/new. Asegúrate de crear tu repositorio limpio, sin un README o un tipo de licencia, etc. puesto que Github te va a preguntar si quieres añadirlos.
+
+Ahora ve a tu repositorio local y ejecuta el siguiente comando:
+
+git remote add [origin] [url-de-tu-repositorio-en-github]
+
+origin representa el nombre del repositorio remoto, tú le puedes poner el que desees, aunque lo más común es llamarle origin, y la url de tu repositorio la obtienes de la barra de direcciones del navegador. Quedaría algo así:
+
+git remote add origin https://github/com/escueladigital/EDgrid
+
+Puedes cerciorarte de que se añadió el repositorio remoto con:
+
+git remote -v
+
+Ahora, asegúrate de que tienes tu área de preparación limpia y los commits enviados.
+
+git status
+
+Si está todo listo, el siguiente paso es enviar tus archivos al repositorio remoto: language-bash git push origin master
+
+Ahora ve a Github y verás tu proyecto subido. ¡Genial!
+3. Me equivoqué en el paso 2 y no creé mi repositorio limpio
+
+Ok, nos puede pasar a todos. Yo creé un repositorio en Github incluyendo la licencia y luego no podía hacer push desde el local porque el remoto no estaba limpio. Si es tu caso, desde local ejecuta lo siguiente:
+
+git pull origin master --allow-unrelated-histories
+
+Ese comando traerá lo que tengas en remoto a tu repositorio local y hará el merge correspondiente. Ahora ya puedes enviar tus archivos al remoto:
+
+git push origin master
+
+Espero haberte ayudado. Si tienes algún consejo que haya omitido, por favor cuéntamelo en los comentarios. Recuerda que en EDteam tenemos el curso Git Desde Cero en el que el profesor Daniel Romero te enseñará, absolutamente desde cero hasta flujos de trabajos completos, como usar git en tu trabajo diario.
