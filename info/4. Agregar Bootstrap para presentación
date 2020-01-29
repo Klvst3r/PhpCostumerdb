@@ -43,3 +43,11 @@ Template Bootstrap
 
 https://getbootstrap.com/docs/3.4/examples/dashboard/#
 
+
+
+Para acelerar este proceso y centrarnos en el desarrollo en PHP vamos a partir del ejemplo Dashboard adaptándolo un poco a nuestro proyecto:
+
+    Analizamos el ejemplo en la carpeta bootstrap-3.3.6/docs/examples/dashboard encontrarás 2 ficheros: dashboard.css que copiamos directamente en la carpeta css de nuestro proyecto y index.html que es el que adaptamos
+    Copiamos la carpeta bootstrap-3.3.6/docs/assets completa, aquí hay imágenes y archivos js que se utilizan en el ejemplo.
+
+Ahora copiando el código PHP que ya habíamos desarrollado, nuestro proyecto puedes ver el cambio al introducir Bootstrap incluida la versión responsive:    
