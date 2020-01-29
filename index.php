@@ -133,11 +133,20 @@
                                 <form role="form" name="formListCbLanguage" method="post" action="index.php">
                                 <?php
                                 try {
-                                    $query = "SELECT * FROM cb_language;";
+                                   /* $query = "SELECT * FROM cb_language;";
                                     $statement = $cdb->prepare($query);
                                     $result = $statement->execute();
-                                    $rows = $statement->fetchAll(\PDO::FETCH_OBJ);                                    
-                                     
+                                    $rows = $statement->fetchAll(\PDO::FETCH_OBJ); */
+
+                                    /*-----------  Sustitución de la consulta por el controlador -------------*/
+                                    include 'controller/CbLanguageController.php';  
+
+                                    $cbLanguageController = new CbLanguageController();
+                                    $cbLanguageController->cdb = $cdb;  
+
+                                    $rows = $cbLanguageController->readAll();
+
+                                    /*-----------  Sustitución de la consulta por el controlador -------------*/
                                     foreach ($rows as $row) {
                                         ?>
                                         <tr>
