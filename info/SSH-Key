@@ -1,3 +1,59 @@
 La ruta de la llave en Windows es:
 
 /c/Users/Klvst3r/.ssh/id_rsa
+
+
+
+https://help.github.com/es/enterprise/2.18/user/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+
+Generar una nueva clave SSH
+
+    Open Git Bash.
+
+    Pega el siguiente texto, que sustituye tu dirección de correo electrónico en GitHub Enterprise.
+
+    $ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+    Esto crea una nueva clave ssh usando el correo electrónico proporcionado como etiqueta.
+
+    > Generating public/private rsa key pair.
+
+    Cuando se te indique "Ingresar un archivo donde guardar la clave", presiona Intro. Al hacerlo aceptas la ubicación predeterminada del archivo.
+
+    > Enter a file in which to save the key (/c/Users/you/.ssh/id_rsa):[Press enter]
+
+    Donde se indica, escribe una contraseña segura. Para obtener más información, consulta "Trabajar con frases de contraseña de la clave SSH".
+
+    > Enter passphrase (empty for no passphrase): [Type a passphrase]
+    > Enter same passphrase again: [Type passphrase again]
+
+Agregar tu clave SSH al ssh-agent
+
+Antes de agregar una nueva clave SSH al ssh-agent oara gestionar tus claves, debes haber comprobado las claves SSH existentes y generado una nueva clave SSH.
+
+Si tienes GitHub Desktop instalado, puedes usarlo para clonar repositorios y no manejar claves SSH. También viene con la herramienta Git Bash, que es la forma preferida de ejecutar comandos git en Windows.
+
+    Verifica que el ssh-agent se esté ejecutando:
+        Si estás usando Git Shell instalado con GitHub Desktop, el ssh-agent se debe estar ejecutando.
+
+        Si estás usando otra indicación, como Git para Windows, puedes usar las instrucciones de "Autolanzamiento del ssh-agent" en Uso de contraseñas para claves SSH" o iníciala manualmente.
+
+        # start the ssh-agent in the background
+        $ eval $(ssh-agent -s)
+        > Agent pid 59566
+
+    Agrega tu llave privada SSH al ssh-agent. If you created your key with a different name, or if you are adding an existing key that has a different name, replace id_rsa in the command with the name of your private key file.
+
+    $ ssh-add ~/.ssh/id_rsa
+
+    Agrega la clave SSH a tu cuenta de GitHub
+
+
+
+Otros Enlaces
+https://platzi.com/tutoriales/1557-git-github/4067-configurar-llaves-ssh-en-git-y-github/
+https://medium.com/@ancizj393/crear-una-clave-ssh-en-git-y-vincular-en-tu-cuenta-de-github-e7a6b22bc93f
+
+
+
