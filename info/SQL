@@ -1,0 +1,196 @@
+Esquema SQL
+Desarrollamos el proyecto con las siguientes tablas, a continuación, se explica su utilidad y algunas características básicas,
+ el resto irá directamente sobre el código SQL, como puedes ver aquí con más detalle
+
+
+http://codigoxules.org/en/tutorial-mariadb-1-preparacion-del-entorno/
+
+
+ Definición
+
+ 
+
+El proyecto consiste en la administración de clientes para diferentes empresas, para ello se plantea la necesidad de tener la información de la empresa y de los clientes, cada empresa podrá tener múltiples clientes, para el caso de estudio se plantea que ambas entidades tengan los campos básicos y direcciones que podrán ser una o varias.
+
+Así mismo, y para completar el proyecto con el desarrollo que creemos necesario, se plantea que la tabla clientes tenga como tablas asociadas las tablas de: monedas, países e idiomas, que podrían ser tablas de uso general en la aplicación, y una tabla más específica como podría ser formas de pago.
+Esquema inicial
+
+Este no es un diagrama entidad relación clásico sino una simple estructura de las tablas que se van a implementar y de sus relaciones.
+
+
+
+Tablas del esquema
+
+Para desarrollar este esquema vamos a necesitar las siguientes tablas, a continuación se explica su utilidad y algunas características básicas, el resto se explicará directamente sobre el código SQL:
+
+
+Tablas del esquema
+====================
+Para desarrollar este esquema vamos a necesitar las siguientes tablas, a continuación se explica su utilidad y algunas características básicas, el resto se explicará directamente sobre el código SQL:
+Learning Project
+TABLA
+	
+DESCRIPCIÓN
+	
+CARACTERÍSTICAS DE DISEÑO
+- -------------
+cb_enterprise
+	
+
+Empresas de la aplicación, cada empresa tendrá sus clientes.
+	
+
+Las empresas tendrán definido inicialmente: idioma, país y moneda, así como los campos básicos para hacer pruebas.
+
+- -------------
+cb_customer
+	
+
+Tabla general de cliente, donde se almacenarán los clientes de las diferentes empresas, se entiende cliente como aquel que compra a una empresa.
+	
+
+Los tendrán definido inicialmente: idioma, país, direcciones, empresas, métodos de pago y moneda, así como los campos básicos para hacer pruebas.
+
+
+- -------------
+cb_addresses
+	
+
+Tabla de registro de las direcciones, se asocian aquí las direcciones que tienen un cliente, cada cliente tendrá un número ilimitado de direcciones con cb_address relacionado mediante cb_addresses (es básicamente una tabla relacional).
+	
+
+Registro para asociar las direcciones al cliente.
+
+
+- -------------
+cb_address
+	
+
+Tabla de dirección donde se guardan los datos de la dirección en sí.
+	
+
+Tabla de dirección que tendrá los campos generales de una dirección, así como números de teléfono, transportista y tipos de dirección.
+
+
+- -------------
+cb_language
+	
+
+Tabla con los idiomas registrados en la aplicación, se podrá relacionar con múltiples tablas.
+	
+
+- -------------
+cb_country
+	
+
+Tabla con los países registrados en la aplicación, se podrá relacionar con múltiples tablas.
+	
+
+Para cada país se especificará la moneda y el idioma utilizado por defecto.
+
+
+- -------------
+cb_currency
+	
+
+Tabla con las monedas registradas en la aplicación, se podrá relacionar con múltiples tablas.
+	
+
+- -------------
+cb_paymentmethod
+	
+
+Métodos de pago definidos para el cliente u otras entidades.
+	
+Instalación de Mariadb
+
+No me extenderé en este apartado, las descargas e información para la instalación las puedes encontrar aquí: https://downloads.mariadb.org/, como en mi caso para las pruebas estoy usando Ubuntu ejecuto directamente la instalación del servidor:
+
+
+	
+sudo apt-get install mariadb-server
+
+Una vez hecha la instalación, vamos a registrar la clave para root y crear la base de datos para las pruebas. Para empezar hacemos login en la cuenta de MySQL root (administrative) usando este comando:
+
+
+	
+mysql -u root -p
+
+Te preguntará la clave para la cuenta de root de MySQL root cuanto instales el software.
+
+De momento vamos a trabajar con la consola de MySQL directamente, tal y como dije anteriormente que se podía acceder y realizar todas las acciones.
+Puesta en marcha básica del servidor
+
+Después de la instalación la base de datos ya queda iniciada automáticamente, y queda funcionando para que al reiniciar el ordenador esta arranque por defecto, algunas opciones de servicio mysql son:
+
+Otras opciones del servicio son: stop|restart|reload|force-reload|status
+
+Por ejemplo, para reiniciar el servidor utilizaríamos:
+
+
+	
+sudo /etc/init.d/mysql restart
+
+Para ver la configuración y la versión mysql que tenemos instalada:
+
+
+	
+sudo /etc/init.d/mysql status
+
+Lo que nos saldrá por pantalla será algo así:
+
+	
+* /usr/bin/mysqladmin&nbsp; Ver 9.0 Distrib 5.5.44-MariaDB, for debian-linux-gnu on x86_64
+Copyright (c) 2000, 2015, Oracle, MariaDB Corporation Ab and others.
+ 
+Server version&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 5.5.44-MariaDB-1ubuntu0.14.04.1
+Protocol version&nbsp;&nbsp;&nbsp; 10
+Connection&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Localhost via UNIX socket
+UNIX socket&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; /var/run/mysqld/mysqld.sock
+Uptime:&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 4 min 17 sec
+ 
+Threads: 1&nbsp; Questions: 82&nbsp; Slow queries: 0&nbsp; Opens: 13&nbsp; Flush tables: 2&nbsp; Open tables: 39&nbsp; Queries per second avg: 0.319
+
+Creamos una base de datos de prueba, para comprobar la instalación:
+
+	
+CREATE DATABASE pruebadb;
+
+El comando para eliminar la base de datos sería.
+
+	
+DROP DATABASE pruebadb;
+
+Si hasta aquí todo fue bien, ya podemos empezar con la creación de la base de datos del proyecto.
+Creación de la base de datos customerdb y el usuario
+
+Creamos la base de datos customerdb:
+
+	
+CREATE DATABASE customerdb;
+
+Creamos el usuario que vamos a utilizar xulescode y la contraseña, en este caso la misma:
+	
+
+CREATE USER xulescode@localhost IDENTIFIED BY 'xulescode'
+
+Damos todos los privilegios al usuario xulescode sobre las base de datos customerdb:
+
+
+	
+GRANT ALL PRIVILEGES ON customerdb.* TO xulescode@localhost;
+
+El comando para eliminar la base de datos sería.
+
+	
+DROP DATABASE customerdb;
+
+Si tuvieras que eliminar el usuario creado este sería el comando a ejecutar:
+
+
+	
+DROP USER xulescode@localhost;
+
+ 
+
+En este caso, para facilitar las pruebas de creación de tablas y consultas voy a utilizar uno de mis IDEs favoritos Netbeans , como entiendo que no es el más común para este tipo de desarrollos, también puedes hacer lo mismos con estos otros programas, utiliza el que ya conozcas, como por ejemplo: https://mariadb.com/kb/en/mariadb/phpmyadmin/

@@ -1,0 +1,49 @@
+Preparación del entorno
+
+Vamos a realizar una Instalación LAMP (Linux + Apache + MySQL + PHP) en Ubuntu 15.10 paso a paso de forma resumida para una explicación detallada consulta la publicación:
+Instalación LAMP en Ubuntu 15.10
+
+Instalación LAMP en Ubuntu 15.10
+Instalamos Apache
+
+Instalamos Apache sino lo tenemos instalado en Ubuntu utilizamos:
+
+	
+sudo apt -get update
+sudo apt -get install apache2
+
+Al finalizar comprobamos la instalación con la url http://127.0.0.1/ en nuestro navegador de cabecera.
+Instalamos MySQL
+
+MySQL es un sistema de gestión de Base de Datos muy utilizado en conjunto con Apache y PHP, vamos a instalar también varios paquetes para la integración de MySQL con Apache y PHP:
+	
+sudo apt-get install mysql-server libapache2-mod-auth-mysql php5-mysql
+
+Ahora creamos para MySQL su propia base de datos para la estructura del directorio donde almacena la información:
+	
+sudo mysql_install_db
+
+Por último, para tener una instalación más segura iniciamos el script interactivo de seguridad:
+	
+sudo mysql_secure_installation
+Instalamos PHP
+
+Instalamos PHP 5 y los componentes con paquetes de ayuda para Apache:
+	
+sudo apt-get install libapache2-mod-php5 php5 php5-mcrypt
+
+Configuramos el fichero de configuración Apache dir.conf que se encuentra en /etc/apache2/mods-enabled/ para esta sencilla edición utilizo gedit:
+	
+sudo gedit /etc/apache2/mods-enabled/dir.conf
+
+Actualizamos la siguiente información para incluir index.php:
+	
+<IfModule mod_dir.c>
+    DirectoryIndex index.php index.html index.cgi index.pl  index.xhtml index.htm
+</IfModule>
+
+Reiniciamos Apache para actualizar los cambios:
+	
+sudo service apache2 restart
+
+El directorio donde colocaremos nuestras páginas PHP y HTML se encuentra en /var/www/html/.
