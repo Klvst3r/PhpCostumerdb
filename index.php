@@ -113,7 +113,78 @@
                         $dConnect = new DatabaseConnect;
                         $cdb = $dConnect->dbConnectSimple();           
                              
-                    ?>    
+                    ?>  
+
+            <!-- Añadimos un botón para el diálogo modal -->
+            <button type="button"
+            class="btn btn-lg btn-primary"
+            data-toggle="modal"
+            data-target="#myModal"
+            onclick="newCbLanguage()">NUEVO</button> 
+
+            <!-- Botón para el diálogo modal -->
+
+    <!-- 
+    Create - Read - Update    
+    Creamos una ventana Modal que utilizaremos para crear un nuevo idioma, actualizarlo o mostrarlo.
+    We create a modal window used to create a new language, update or display.-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Creación de idioma</h4>
+            </div>
+            <form role="form" name="formCbLanguage" method="post" action="index.php">
+                <div class="modal-body">                                    
+                    <div class="input-group">
+                        <label for="idlanguage">Idioma</label>
+                        <input type="text" class="form-control" id="idlanguage" name="idlanguage" placeholder="es_ES (por ejemplo)" >
+                        <small class="text-muted">Lo utilizamos como ID y se forma con los iso de idioma (es) y país (ES) unidos por un guión bajo.</small>
+                    </div>
+                    <div class="input-group"> 
+                        <label for="namelanguage">Nombre</label>
+                        <input type="text" class="form-control" id="namelanguage" name="namelanguage" placeholder="Nombre" aria-describedby="sizing-addon2">
+                    </div>
+                    <div class="input-group"> 
+                        <label for="isactive">Activo</label>
+                        <input type="text" class="form-control" id="isactive" name="isactive" placeholder="Activo" aria-describedby="sizing-addon2">
+                        <small class="text-muted">Usa el valor Y si está activo y N en caso contrario</small>
+                    </div>                          
+                    <div class="input-group"> 
+                        <label for="languageiso">Iso</label>
+                        <input type="text" class="form-control" id="languageiso" name="languageiso" placeholder="Iso" aria-describedby="sizing-addon2">
+                    </div>
+                    <div class="input-group"> 
+                        <label for="countrycode">Código País</label>
+                        <input type="text" class="form-control" id="countrycode" name="countrycode" placeholder="Código País" aria-describedby="sizing-addon2">
+                    </div>
+                    <div class="input-group"> 
+                        <label for="isbaselanguage">Idioma base</label>
+                        <input type="text" class="form-control" id="isbaselanguage" name="isbaselanguage" placeholder="Es idioma base" aria-describedby="sizing-addon2">
+                        <small class="text-muted">Usa el valor Y si está activo y N en caso contrario</small>
+                    </div>
+                    <div class="input-group"> 
+                        <label for="issystemlanguage">Idioma sistema</label>
+                        <input type="text" class="form-control" id="issystemlanguage" name="issystemlanguage" placeholder="Es el idioma del sistema" aria-describedby="sizing-addon2">
+                        <small class="text-muted">Usa el valor Y si está activo y N en caso contrario</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="save-language" name="save-language" type="submit" class="btn btn-primary">Guardar</button>
+                     
+                    <button id="cancel"type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>                                    
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->    
+
+<!--                    Ventana Modal.                       -->
+
+                        
+
+
              
                     <div class="table-responsive">
                         <table class="table table-striped">

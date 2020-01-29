@@ -73,4 +73,3 @@ Este formulario nos va a permitir transmitir los valore de los registros de la t
                     <!-- Fin código PHP CRUD -->
 
 
-Para el desarrollo de las acciones vamos a crear una clase donde incluiremos todas las operaciones CRUD, así como las consultas sobre cb_language, es decir, creamos un controlador para gestionar la tabla cb_language, a nuestra clase la llamamos CbLanguageController.                    

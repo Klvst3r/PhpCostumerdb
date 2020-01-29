@@ -47,7 +47,7 @@ class DatabaseConnect {
             echo 'Error al establecer la conexión: '.$pdoExcetion;
             exit();
         }
-        echo 'Conectado a la base de datos: '.$dbname;
+        //echo 'Conectado a la base de datos: '.$dbname;
         return $connection;        
     } // dbConnect
 
