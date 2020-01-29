@@ -1,0 +1,45 @@
+4. AÑADIMOS BOOTSTRAP PARA LA PRESENTACIÓN
+
+Vamos a usar un framework que nos ayude con la presentación escogiendo uno de los más populares de la actualidad para diseño de sitios y aplicaciones web como es Bootstrap, este nos proporciona plantillas de diseño con tipografía, formularios, botones, menús de navegación, …, basado en HTML y CSS con extensiones JavaScript opcionales.
+
+Vamos a usar como base para nuestro proyecto la plantilla del ejemplo Dashoard Template for Bootstrap, de donde cogeremos la estructura para moldearlo a nuestras necesidades.
+
+Para empezar descargamos Bootstrap desde Bootstrap getting started – Download y lo descomprimimos en nuestro escritorio.
+
+Integramos Bootstrap paso a paso
+
+Vamos a hacer una integración directa, así, copiamos a nuestro proyecto la distribución de Bootstrap que encontramos en la carpeta dist si hemos bajado directamente la distribución con ejemplo, sino la encontraremos directamente al descomprimir el archivo. Esta es la estructura que copiamos:
+
+https://getbootstrap.com/docs/4.4/getting-started/download/
+
+bootstrap/
+├---css/
+|	├--- bootstrap.css
+|	├--- bootstrap.css.map
+|	├--- bootstrap.min.css
+|	├--- bootstrap.min.css.map
+|	├--- bootstrap-theme.css
+|	├--- bootstrap-theme.css.map
+|	├--- bootstrap-theme.min.css
+|	└--- bootstrap-theme.min.css.map
+|
+├-- js/
+|	├--- bootstrap.js
+|	└--- bootstrap.min.js
+|	
+└-- fonts/
+	├--- glyphicons-halfing-regular.eot
+	├--- glyphicons-halfing-regular.svg
+	├--- glyphicons-halfing-regular.ttf
+	├--- glyphicons-halfing-regular.woff
+	├--- glyphicons-halfing-regular.woff2
+
+
+Descargar Boostrap 3.4
+https://getbootstrap.com/docs/3.4/getting-started/#download
+
+
+Template Bootstrap
+
+https://getbootstrap.com/docs/3.4/examples/dashboard/#
+
