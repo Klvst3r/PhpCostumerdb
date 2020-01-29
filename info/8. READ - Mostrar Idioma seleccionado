@@ -1,0 +1,24 @@
+Para mostrar los datos de un idioma seleccionado vamos a incluir un botón en cada fila de la tabla que hemos diseñado, para hacer el ejemplo lo más sencillo posible, para ello implementamos el botón de lectura y lo colocamos en la tabla donde habíamos añadido el texto Botones de acciones, este es el código en el que utilizamos el id see-language:
+	
+<button id="see-language" name="see-language"type="button" class="btn btn-success"
+        data-toggle="modal"
+        data-target="#myModal"
+        onclick="openCbLanguage('see', 
+                    '<?php print($row->idlanguage); ?>', '<?php print($row->namelanguage); ?>',
+                    '<?php print($row->isactive); ?>', '<?php print($row->languageiso); ?>',
+                    '<?php print($row->countrycode); ?>', '<?php print($row->isbaselanguage); ?>',
+                    '<?php print($row->issystemlanguage); ?>')">
+    Ver</button>
+
+Hemos utilizado la clase btn-success en nuestro código para darle un color verde utilizando la documentación de Bootstrap para botones, también hemos añadido una acción al hacer click que será la que habrá la ventana modal con los datos del idioma seleccionado utilizando el formulario anterior (no es necesario hacer ningún cambio), así veremos ahora nuestra pantalla:
+
+
+<button id="see-language" name="see-language"type="button" class="btn btn-success"
+        data-toggle="modal"
+        data-target="#myModal"
+        onclick="openCbLanguage('see', 
+                    '<?php print($row->idlanguage); ?>', '<?php print($row->namelanguage); ?>',
+                    '<?php print($row->isactive); ?>', '<?php print($row->languageiso); ?>',
+                    '<?php print($row->countrycode); ?>', '<?php print($row->isbaselanguage); ?>',
+                    '<?php print($row->issystemlanguage); ?>')">
+    Ver</button>

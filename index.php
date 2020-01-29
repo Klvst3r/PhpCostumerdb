@@ -30,6 +30,73 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script>
+        /**
+         * Abrimos la ventana modal para crear un nuevo elemento.
+         * We open a modal window to create a new element.
+         * @returns {undefined}
+         */
+        function newCbLanguage(){                 
+            openCbLanguage('new', null, null, null, null, null, null, null);
+        }
+        /**
+         * Abrimos la ventana modal teniendo en cuenta la acción (action) para 
+         * utilizarla como creación (Create), lectura (Read) o actualización (Update).
+         * We opened the modal window considering the action (action) to use 
+         * as creation (Create), reading (Read) or upgrade (Update).
+         * @param {type} action las acciones que utilizamos son : new para Create, see para Read y edit para Update.
+         *      Actions we use are :  new for Create, see for Read and edit for Update.
+         * @param {type} idlanguage
+         * @param {type} namelanguage
+         * @param {type} isactive
+         * @param {type} languageiso
+         * @param {type} countrycode
+         * @param {type} isbaselanguage
+         * @param {type} issystemlanguage
+         * @returns {undefined}
+         */
+        function openCbLanguage(action, idlanguage, namelanguage, isactive, languageiso, countrycode, isbaselanguage, issystemlanguage){    
+            document.formCbLanguage.idlanguage.value = idlanguage;
+            document.formCbLanguage.namelanguage.value = namelanguage;
+            document.formCbLanguage.isactive.value = isactive;
+            document.formCbLanguage.languageiso.value = languageiso;
+            document.formCbLanguage.countrycode.value = countrycode;
+            document.formCbLanguage.isbaselanguage.value = isbaselanguage;
+            document.formCbLanguage.issystemlanguage.value = issystemlanguage;
+             
+            document.formCbLanguage.idlanguage.disabled = (action === 'see')?true:false;                
+            document.formCbLanguage.namelanguage.disabled = (action === 'see')?true:false; 
+            document.formCbLanguage.isactive.disabled = (action === 'see')?true:false; 
+            document.formCbLanguage.languageiso.disabled = (action === 'see')?true:false; 
+            document.formCbLanguage.countrycode.disabled = (action === 'see')?true:false; 
+            document.formCbLanguage.isbaselanguage.disabled = (action === 'see')?true:false; 
+            document.formCbLanguage.issystemlanguage.disabled = (action === 'see')?true:false; 
+             
+            $('#myModal').on('shown.bs.modal', function () {
+                var modal = $(this);
+                if (action === 'new'){                            
+                    modal.find('.modal-title').text('Creación de idioma');  
+                    $('#save-language').show();
+                    $('#update-language').hide();                
+                }else if (action === 'edit'){
+                    modal.find('.modal-title').text('Actualizar idioma');
+                    $('#save-language').hide();                    
+                    $('#update-language').show();   
+                }else if (action === 'see'){
+                    modal.find('.modal-title').text('Ver idioma');
+                    $('#save-language').hide();   
+                    $('#update-language').hide();   
+                }
+                $('#idlanguage').focus()
+             
+            });
+        }        
+         
+    </script>
+
+
+
   </head>
 
   <body>
@@ -248,7 +315,21 @@
                                             <td><?php print($row->countrycode); ?></td>
                                             <td><?php print($row->isbaselanguage); ?></td>
                                             <td><?php print($row->issystemlanguage); ?></td>
-                                            <td>BOTONES DE ACCIONES</td>
+                                            <!-- <td>BOTONES DE ACCIONES</td> -->
+                                            <td>
+                                            <button id="see-language" name="see-language"type="button" class="btn btn-success"
+                                            data-toggle="modal"
+                                            data-target="#myModal"
+                                            onclick="openCbLanguage('see', 
+                                                        '<?php print($row->idlanguage); ?>', '<?php print($row->namelanguage); ?>',
+                                                        '<?php print($row->isactive); ?>', '<?php print($row->languageiso); ?>',
+                                                        '<?php print($row->countrycode); ?>', '<?php print($row->isbaselanguage); ?>',
+                                                        '<?php print($row->issystemlanguage); ?>')">
+                                            Ver</button>
+
+
+
+                                            </td>
                                             </tr>      
                                          
                                     <?php
