@@ -109,9 +109,25 @@
   
                     <?php
                         include './database/DatabaseConnect.php';
+
+                        //Controller
+                        include './controller/CbLanguageController.php';
                          
                         $dConnect = new DatabaseConnect;
                         $cdb = $dConnect->dbConnectSimple();           
+
+                        if (isset($_POST["save-language"]) ) {  
+                            $idlanguage = $_POST['idlanguage'];
+                            $namelanguage = $_POST['namelanguage'];
+                            $isactive  = $_POST['isactive'];
+                            $languageiso = $_POST['languageiso'];
+                            $countrycode = $_POST['countrycode'];
+                            $isbaselanguage = $_POST['isbaselanguage'];
+                            $issystemlanguage = $_POST['issystemlanguage']; 
+                            $cbLanguageController->create($idlanguage, $namelanguage, $isactive, $languageiso, $countrycode, $isbaselanguage, $issystemlanguage);
+                        }
+
+
                              
                     ?>  
 
