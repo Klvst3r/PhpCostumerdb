@@ -1,6 +1,6 @@
 <?php
  
-use PDO;
+//use PDO;
  
 /**
  * En la clase <b>DatabaseConnect</b> vamos a incluir los métodos que utilizamos para crear y 
@@ -49,4 +49,6 @@ class DatabaseConnect {
         }
         echo 'Conectado a la base de datos: '.$dbname;
         return $connection;        
-    }
+    } // dbConnect
+
+}// DatabaseConnect
