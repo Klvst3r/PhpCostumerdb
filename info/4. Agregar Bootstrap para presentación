@@ -51,3 +51,7 @@ Para acelerar este proceso y centrarnos en el desarrollo en PHP vamos a partir d
     Copiamos la carpeta bootstrap-3.3.6/docs/assets completa, aquí hay imágenes y archivos js que se utilizan en el ejemplo.
 
 Ahora copiando el código PHP que ya habíamos desarrollado, nuestro proyecto puedes ver el cambio al introducir Bootstrap incluida la versión responsive:    
+
+
+
+No voy a entrar en esta publicación a explicar como utilizar y sacarle partido a Bootstrap, simplemente destacar que hemos incluido el css de la plantilla, así como la integración de JQuery que es una biblioteca Javascript que nos permite simplificar la manera de interactuar con los documentos HTML, manipular el árbol DOM y agregar AJAX como principales características.
